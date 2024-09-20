@@ -18,13 +18,13 @@ export abstract class AbstractRelationalService<T extends AbstractObject, U exte
     });
   }
 
-  addRelatedEntity(entityId: string, relatedId: string): T {
+  linkEntity(entityId: string, relatedId: string): T {
     this.mainDb.addRelatedEntity(entityId, relatedId);
     this.relatedDb.addRelatedEntity(relatedId, entityId);
     return this.findOne(entityId);
   }
 
-  removeRelatedEntity(entityId: string, relatedId: string): T {
+  unlinkEntity(entityId: string, relatedId: string): T {
     this.mainDb.removeRelatedEntity(entityId, relatedId);
     this.relatedDb.removeRelatedEntity(relatedId, entityId);
     return this.findOne(entityId);
