@@ -1,6 +1,7 @@
 import {
     IsString,
-    IsArray
+    IsArray,
+    MinLength
 } from 'class-validator';
 import { OmitType } from '@nestjs/mapped-types';
 import { Book } from 'src/types/data.interface';
@@ -13,6 +14,9 @@ export class CreateBookDto extends OmitType(Book, ["id"]) {
         each: true,
         message: 'Authors has to be an array of strings.'
     })
-    override readonly authors: string[];
+    @MinLength(1, {
+        message: 'There has to be at least one author.'
+    })
+    readonly authors: string[];
 }
 

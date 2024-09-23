@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsNotEmpty, IsArray, IsInt, Max } from 'class-validator';
+import { IsString, IsEmail, IsNotEmpty, IsArray, IsInt, Max, } from 'class-validator';
 
 export interface Identifiable {
     id: string;
@@ -26,10 +26,7 @@ export class Book extends AbstractObject {
         message: `Year cannot be greater than the current year.`
     })
     year!: number;
-    @IsArray({
-        message: 'Authors has to be an array.'
-    })
-    authors!: (string | Author)[];
+    authors?: string[];
 }
 
 export class Author extends AbstractObject {
@@ -52,10 +49,7 @@ export class Author extends AbstractObject {
         message: 'Email is not valid.'
     })
     email!: string;
-    @IsArray({
-        message: 'Books has to be an array.'
-    })
-    books!: (string | Book)[];
+    books?: string[];
 }
 
 export interface IAuthors {
@@ -64,7 +58,19 @@ export interface IAuthors {
 export interface IBooks {
     [id: string]: Book;
 }
+
+export class BookAuthor {
+    @IsString()
+    @IsNotEmpty()
+    bookId: string;
+
+    @IsString()
+    @IsNotEmpty()
+    authorId: string;
+}
+
 export interface IData {
     authors: IAuthors;
     books: IBooks;
+    books_authors: BookAuthor[];
 }

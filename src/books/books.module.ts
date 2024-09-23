@@ -1,19 +1,24 @@
 import { Module } from '@nestjs/common';
-import { BooksService } from './books.service';
+import { BooksService } from './books.service'; //For Book without Author
+import { BooksWithAuthorsService } from './books-with-authors.service'; //For Book with Author
 import { BooksController } from './books.controller';
-import { DatabaseModule } from 'src/data/database.module';
 import { BooksRepository } from './books.repository';
+import { BooksAuthorsRepository } from 'src/books_authors/books-authors.repository';
 @Module({
-  imports: [DatabaseModule],
+  imports: [],
   controllers: [BooksController],
   providers: [
     {
       provide: 'BooksService',
-      useClass: BooksService
+      useClass: BooksService //Change this for different implementation
     },
     {
       provide: 'BooksRepository',
       useClass: BooksRepository
+    },
+    {
+      provide: 'BooksAuthorsRepository',
+      useClass: BooksAuthorsRepository
     }
   ],
 })
