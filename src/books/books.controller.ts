@@ -1,19 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { BooksService } from './books.service';
+import { Controller, Post, Body, Patch, Param, Delete, Get } from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
-import { AbstractController } from '../abstract/controller/abstractRelational.controller';
-import { Book, Author } from '../types/data.interface';
+import { Inject } from '@nestjs/common';
+import { BooksAbstractService } from './books.abstract-service';
 
 @Controller('books')
-export class BooksController extends AbstractController<Book, Author> {
-  constructor(private readonly booksService: BooksService) {
-    super(booksService);
-  }
+export class BooksController {
+  constructor(
+    @Inject('BooksService')
+    private readonly booksService: BooksAbstractService
+  ) {}
 
   @Post()
   create(@Body() createBookDto: CreateBookDto) {
     return this.booksService.create(createBookDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.booksService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.booksService.findOne(id);
   }
 
   @Patch(':id')
@@ -21,13 +31,8 @@ export class BooksController extends AbstractController<Book, Author> {
     return this.booksService.update(id, updateBookDto);
   }
 
-  @Post(':id/authors/:authorId')
-  addRelated(@Param('id') id: string, @Param('authorId') authorId: string) {
-    return this.booksService.linkEntity(id, authorId);
-  }
-
-  @Delete(':id/authors/:authorId')
-  removeRelated(@Param('id') id: string, @Param('authorId') authorId: string) {
-    return this.booksService.unlinkEntity(id, authorId);
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.booksService.remove(id);
   }
 }

@@ -1,35 +1,40 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { AuthorsService } from './authors.service';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Inject } from '@nestjs/common';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
-import { v4 as uuidv4 } from 'uuid';
-import { AbstractController } from '../abstract/controller/abstractRelational.controller';
-import { Author, Book } from '../types/data.interface';
+import { AuthorsAbstractService } from './authors.abstract-service';
+import { Author } from '../types/data.interface';
 
 @Controller('authors')
-export class AuthorsController extends AbstractController<Author, Book> {
-  constructor(protected authorsService: AuthorsService) {
-    super(authorsService);
+export class AuthorsController{
+  constructor(
+    @Inject('AuthorsService')
+    private authorsService: AuthorsAbstractService
+  ) {
   }
 
   @Post()
-  override create(@Body() createAuthorDto: CreateAuthorDto) : Author {
-    return this.authorsService.create({...createAuthorDto});
+  create(@Body() createAuthorDto: CreateAuthorDto) : Author {
+    return this.authorsService.create(createAuthorDto);
+  }
+
+  @Get()
+  findAll() : Author[] {
+    return this.authorsService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) : Author {
+    return this.authorsService.findOne(id);
   }
 
   @Patch(':id')
-  override update(@Param('id') id: string, @Body() updateAuthorDto: UpdateAuthorDto) : Author {
+  update(@Param('id') id: string, @Body() updateAuthorDto: UpdateAuthorDto) : Author {
     return this.authorsService.update(id, updateAuthorDto);
   }
 
-  @Post(':id/books/:bookId')
-  addRelated(@Param('id') id: string, @Param('bookId') bookId: string) : Author {
-    return this.authorsService.linkEntity(id, bookId);
-    
-  }
-
-  @Delete(':id/books/:bookId')
-  removeRelated(@Param('id') id: string, @Param('bookId') bookId: string) : Author {
-    return this.authorsService.unlinkEntity(id, bookId);
+  @Delete(':id')
+  remove(@Param('id') id: string) : {message: string} {
+    this.authorsService.remove(id);
+    return {message: `Author with id: ${id} deleted successfully`};
   }
 }
