@@ -13,7 +13,7 @@ import { BooksAuthorsRepository } from 'src/books_authors/books-authors.reposito
     },
     {
       provide: 'AuthorsService',
-      useClass: AuthorsService //Change this for different implementation
+      useClass: AuthorsWithBooksService //Change this for different implementation
     },
     {
       provide: 'BooksAuthorsRepository',

@@ -10,7 +10,7 @@ import { BooksAuthorsRepository } from 'src/books_authors/books-authors.reposito
   providers: [
     {
       provide: 'BooksService',
-      useClass: BooksService //Change this for different implementation
+      useClass: BooksWithAuthorsService //Change this for different implementation
     },
     {
       provide: 'BooksRepository',

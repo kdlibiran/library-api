@@ -3,12 +3,12 @@ import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { AuthorsAbstractService } from './authors.abstract-service';
 import { Author } from '../types/data.interface';
-
+import { AuthorsOptionalService } from './authors-optional-service.interface';
 @Controller('authors')
 export class AuthorsController{
   constructor(
     @Inject('AuthorsService')
-    private authorsService: AuthorsAbstractService
+    private authorsService: AuthorsAbstractService & AuthorsOptionalService
   ) {
   }
 
@@ -36,5 +36,15 @@ export class AuthorsController{
   remove(@Param('id') id: string) : {message: string} {
     this.authorsService.remove(id);
     return {message: `Author with id: ${id} deleted successfully`};
+  }
+
+  @Post(':id/books/:bookId')
+  addBook(@Param('id') id: string, @Param('bookId') bookId: string) : Author {
+    return this.authorsService.addBook(bookId, id);
+  }
+
+  @Delete(':id/books/:bookId')
+  removeBook(@Param('id') id: string, @Param('bookId') bookId: string) : void {
+    this.authorsService.removeBook(bookId, id);
   }
 }
