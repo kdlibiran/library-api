@@ -39,12 +39,20 @@ export class AuthorsController{
   }
 
   @Post(':id/books/:bookId')
-  addBook(@Param('id') id: string, @Param('bookId') bookId: string) : Author {
-    return this.authorsService.addBook(bookId, id);
+  addBook(@Param('id') id: string, @Param('bookId') bookId: string) : Author | {message: string} {
+    if (this.authorsService?.addBook) {
+      return this.authorsService.addBook(bookId, id);
+    } else {
+      return { message: 'addBook method is not implemented' };
+    }
   }
 
   @Delete(':id/books/:bookId')
-  removeBook(@Param('id') id: string, @Param('bookId') bookId: string) : void {
-    this.authorsService.removeBook(bookId, id);
+  removeBook(@Param('id') id: string, @Param('bookId') bookId: string) : Author | {message: string} {
+    if (this.authorsService?.removeBook) {
+      return this.authorsService.removeBook(bookId, id);
+    } else {
+      return { message: 'removeBook method is not implemented' };
+    }
   }
 }
