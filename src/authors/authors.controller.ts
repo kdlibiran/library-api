@@ -3,7 +3,7 @@ import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { AuthorsAbstractService } from './authors.abstract-service';
 import { Author } from '../types/data.interface';
-import { AuthorsOptionalService } from './authors-optional-service.interface';
+import { AuthorsOptionalService } from './with_books/authors-optional-service.interface';
 @Controller('authors')
 export class AuthorsController{
   constructor(

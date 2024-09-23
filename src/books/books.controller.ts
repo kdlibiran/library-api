@@ -3,7 +3,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Inject } from '@nestjs/common';
 import { BooksAbstractService } from './books.abstract-service';
-import { BooksOptionalService } from './books-optional-service.interface';
+import { BooksOptionalService } from './with_authors/books-optional-service.interface';
 @Controller('books')
 export class BooksController {
   constructor(

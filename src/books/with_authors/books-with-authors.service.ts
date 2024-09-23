@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateBookDto } from './dto/create-book.dto';
-import { Book } from '../types/data.interface';
+import { CreateBookDto } from '../dto/create-book.dto';
+import { Book } from '../../types/data.interface';
 import { v4 as uuidv4 } from 'uuid';
-import { UpdateBookDto } from './dto/update-book.dto';
-import { BooksAbstractRepository } from './books.abstract-repository';
-import { BooksAbstractService } from './books.abstract-service';
+import { UpdateBookDto } from '../dto/update-book.dto';
+import { BooksAbstractRepository } from '../books.abstract-repository';
+import { BooksAbstractService } from '../books.abstract-service';
 import { Inject } from '@nestjs/common';
 import { BooksOptionalService } from './books-optional-service.interface';
 import { BooksAuthorsAbstractRepository } from 'src/books_authors/books-authors.abstract-repository';

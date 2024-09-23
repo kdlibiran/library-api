@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { BooksService } from './books.service'; //For Book without Author
-import { BooksWithAuthorsService } from './books-with-authors.service'; //For Book with Author
+import { BooksWithAuthorsService } from './with_authors/books-with-authors.service'; //For Book with Author
 import { BooksController } from './books.controller';
 import { BooksRepository } from './books.repository';
 import { BooksAuthorsRepository } from 'src/books_authors/books-authors.repository';
